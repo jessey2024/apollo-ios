@@ -3,7 +3,7 @@ import Foundation
 extension String: JSONDecodable, JSONEncodable {
   /// The ``JSONDecodable`` initializer for a `String`.
   ///
-  /// This initializer will accept a `jsonValue` of a `String`, `Int` or `Double`.
+  /// This initializer will accept a `jsonValue` of a `String`, `Int`, `Double` or `Decimal`.
   /// This allows for conversion of custom scalars that are represented as any of these types to
   /// convert using the default custom scalar typealias of `String`.
   ///
@@ -19,6 +19,8 @@ extension String: JSONDecodable, JSONEncodable {
       self = String(int64)
     case let double as Double:
       self = String(double)
+    case let decimal as Decimal:
+      self = String(describing: decimal)
     default:
         throw JSONDecodingError.couldNotConvert(value: value, to: String.self)
     }
